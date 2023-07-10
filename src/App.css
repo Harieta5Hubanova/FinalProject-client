@@ -1,0 +1,247 @@
+.navbar {
+  background-color: #333;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbar-item {
+  margin-right: 20px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar__link:hover {
+  color: #aaa;
+}
+
+.selected {
+  color: rgb(170, 170, 255);
+  border-bottom: rgb(170, 170, 255) solid 2px;
+  padding-bottom: 5px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.right {
+  display: flex;
+  align-items: flex-end;
+  display: inline-flex;
+}
+.left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.LoginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.LoginPage h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.LoginPage form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LoginPage label {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.LoginPage input[type='email'],
+.LoginPage input[type='password'] {
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+.LoginPage button {
+  background-color: rgb(170, 170, 255);
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 150px;
+}
+
+.LoginPage button:hover {
+  background-color: rgb(140, 140, 225);
+}
+
+.LoginPage .error-message {
+  color: #ff0000;
+  margin-top: 1rem;
+}
+
+.LoginPage p {
+  color: #333;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.LoginPage p a {
+  color: rgb(170, 170, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.LoginPage p a:hover {
+  text-decoration: underline;
+}
+.SignupPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.SignupPage h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.SignupPage form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SignupPage label {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.SignupPage input[type='email'],
+.SignupPage input[type='password'],
+.SignupPage input[type='text'] {
+  border: none;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+.SignupPage button {
+  background-color: rgb(170, 170, 255);
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  width: 150px;
+}
+
+.SignupPage button:hover {
+  background-color: rgb(140, 140, 225);
+}
+
+.SignupPage .error-message {
+  color: #ff0000;
+  margin-top: 1rem;
+}
+
+.SignupPage p {
+  color: #333;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.SignupPage p a {
+  color: rgb(170, 170, 255);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.SignupPage p a:hover {
+  text-decoration: underline;
+}
+
+.CreateProfile {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+}
+
+.CreateProfile h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.CreateProfile label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.CreateProfile input[type='text'],
+.CreateProfile input[type='date'],
+.CreateProfile input[type='file'] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.CreateProfile input[type='checkbox'] {
+  margin-bottom: 20px;
+}
+
+.CreateProfile button[type='submit'] {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.CreateProfile button[type='submit']:hover {
+  background-color: #555;
+}
+
+.animation-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* Adjust this value based on the aspect ratio of the animation */
+}
