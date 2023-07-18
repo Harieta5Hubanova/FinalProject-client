@@ -23,7 +23,3 @@ export const upload = uploadData => {
 export const fillProfileData = updatedProfile => {
   return axios.put(`${baseURL}/profile`, updatedProfile);
 };
-
-export const getClimbers = () => {
-  return axios.get(`${baseURL}/climbers`);
-};

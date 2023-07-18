@@ -1,12 +1,14 @@
-import { Center, Grid, GridItem, Spinner } from '@chakra-ui/react';
+import { Center, Grid, GridItem, Spinner, Button } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { fetchCrags } from '../api/crags.api';
 import CragCard from '../components/CragCard';
+import { useNavigate } from 'react-router-dom';
 
 const Crags = () => {
   const [crags, setCrags] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCragsData = async () => {
@@ -46,15 +48,27 @@ const Crags = () => {
         justifyContent={'center'}
         templateColumns={'repeat(3, 2fr)'}
       >
-        {crags.map(crag => {
-          return (
-            <GridItem key={crag._id}>
-              <CragCard crag={crag} />
-            </GridItem>
-          );
-        })}
+        {crags.length &&
+          crags.map(crag => {
+            return (
+              <GridItem key={crag._id}>
+                <CragCard crag={crag} />
+              </GridItem>
+            );
+          })}
       </Grid>
-      <button>+</button>
+      <Grid alignItems={'right'} justifyContent={'right'}>
+        <Button
+          onClick={() => navigate('/add-crag')}
+          fontSize="lg"
+          fontWeight={600}
+          color="white"
+          bg="rgb(140, 140, 225)"
+          _hover={{ bg: 'rgb(120, 120, 205)' }}
+        >
+          +
+        </Button>
+      </Grid>
     </>
   );
 };

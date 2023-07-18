@@ -9,7 +9,9 @@ import ProfilePage from './pages/ProfilePage';
 import Crags from './pages/Crags';
 import Climbers from './pages/Climbers';
 import AddRoute from './pages/AddRoute';
-import { fetchCrags } from './api/crags.api';
+import CragDetails from './pages/CragDetails';
+import EditCrag from './pages/EditGrag';
+import IsAnon from './components/IsAnon';
 
 const App = () => {
   return (
@@ -21,14 +23,20 @@ const App = () => {
         <Route path="/" element={<Home />} />
 
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <IsAnon>
+              <Login />
+            </IsAnon>
+          }
+        />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/crags" element={<Crags />} />
         <Route path="/add-crag" element={<AddRoute />} />
-        <Route
-          path="/climbers"
-          element={<Climbers refreshList={fetchCrags} />}
-        />
+        <Route path="/climbers" element={<Climbers />} />
+        <Route path="/crags/:id" element={<CragDetails />} />
+        <Route path="/crags/edit/:id" element={<EditCrag />} />
       </Routes>
     </>
   );

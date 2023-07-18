@@ -20,7 +20,7 @@ export const getCrag = id => {
 };
 
 export const addCrag = crag => {
-  return axios.post(`${baseURL}/crags`, crag);
+  return axios.post(`${baseURL}/add-crag`, crag);
 };
 export const updateCrag = updatedCrag => {
   return axios.put(`${baseURL}/crags/${updatedCrag._id}`, updatedCrag);
@@ -43,4 +43,8 @@ export const fetchCrags = async () => {
 };
 export const getClimbers = () => {
   return axios.get(`${baseURL}/climbers`);
+};
+
+export const getArea = () => {
+  return axios.get(`${baseURL}/area`);
 };

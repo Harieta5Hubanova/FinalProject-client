@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { fillProfileData, upload } from '../api/auth.api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+const levelOptions = ['Beginner', 'Intermediate', 'Advanced'];
 
 const ProfilePage = () => {
   const [name, setName] = useState('');
@@ -122,12 +123,14 @@ const ProfilePage = () => {
         <input type="date" name="dob" value={dob} onChange={handleDob}></input>
 
         <label htmlFor="">Level</label>
-        <input
-          type="text"
-          name="level"
-          value={level}
-          onChange={handleLevel}
-        ></input>
+        <select name="level" value={level} onChange={handleLevel}>
+          <option value="">Select Level</option>
+          {levelOptions.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
         <label htmlFor="">Equipment</label>
         <input
           type="checkbox"
