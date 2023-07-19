@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { fillProfileData, upload } from '../api/auth.api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-const levelOptions = ['Beginner', 'Intermediate', 'Advanced'];
+const levelOptions = ['Beginner', 'Intermediate', 'Advanced', 'Pro'];
 
 const ProfilePage = () => {
   const [name, setName] = useState('');
