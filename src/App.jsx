@@ -11,7 +11,7 @@ import Climbers from './pages/Climbers';
 import AddRoute from './pages/AddRoute';
 import CragDetails from './pages/CragDetails';
 import EditCrag from './pages/EditGrag';
-import IsAnon from './components/IsAnon';
+import IsAnon from './components/isAnon';
 
 const App = () => {
   return (
