@@ -7,6 +7,7 @@ const AuthProviderWrapper = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const storeToken = token => {
     localStorage.setItem('authToken', token);
@@ -19,6 +20,9 @@ const AuthProviderWrapper = ({ children }) => {
       try {
         const response = await verify(storedToken);
         const user = response.data;
+        if (user.role === 'admin') {
+          setIsAdmin(true);
+        }
         setUser(user);
         setIsLoggedIn(true);
       } catch (error) {
@@ -56,7 +60,8 @@ const AuthProviderWrapper = ({ children }) => {
         user,
         storeToken,
         authenticateUser,
-        logOutUser
+        logOutUser,
+        isAdmin
       }}
     >
       {children}

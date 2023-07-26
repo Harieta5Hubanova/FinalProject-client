@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { fillProfileData, upload } from '../api/auth.api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-const levelOptions = ['Beginner', 'Intermediate', 'Advanced', 'Pro'];
+const levelOptions = ['Beginner', 'Intermediate', 'Advanced', 'Pro', 'Elite'];
 
 const ProfilePage = () => {
   const [name, setName] = useState('');
@@ -45,6 +45,7 @@ const ProfilePage = () => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
+      // 0 => zero || !!0 => false
       const newProfile = {
         name,
         surname,
@@ -52,7 +53,7 @@ const ProfilePage = () => {
         city,
         dob,
         level: level,
-        equipment
+        equipment: !!equipment
       };
       if (imageUrl) {
         // create new FormData
@@ -60,7 +61,7 @@ const ProfilePage = () => {
         const uploadData = new FormData();
         uploadData.append('file', imageUrl);
         const response = await upload(uploadData);
-        newProfile.imgUrl = response.data.imgUrl;
+        newProfile.imageUrl = response.data.imageUrl;
       }
 
       await fillProfileData(newProfile);
@@ -79,69 +80,79 @@ const ProfilePage = () => {
     setDob('');
     setLevel('');
     setEquipment('');
+    /* 
+        equipement ? <div>true : 
+    */
   };
   return (
-    <div className="CreateProfile">
-      <h2>Climber Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Name</label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleName}
-        ></input>
-        <label htmlFor="">Surname</label>
-        <input
-          type="text"
-          name="surname"
-          value={surname}
-          onChange={handleSurname}
-        ></input>
+    name && (
+      <div className="CreateProfile">
+        <h2>Climber Profile</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={handleName}
+          ></input>
+          <label htmlFor="">Surname</label>
+          <input
+            type="text"
+            name="surname"
+            value={surname}
+            onChange={handleSurname}
+          ></input>
 
-        <label htmlFor="">Image</label>
-        <input type="file" onChange={handleImageUrl} />
+          <label htmlFor="">Image</label>
+          <input type="file" onChange={handleImageUrl} />
 
-        <label htmlFor="">Country</label>
-        <input
-          type="text"
-          name="country"
-          value={country}
-          onChange={handleCountry}
-        ></input>
+          <label htmlFor="">Country</label>
+          <input
+            type="text"
+            name="country"
+            value={country}
+            onChange={handleCountry}
+          ></input>
 
-        <label htmlFor="">City</label>
-        <input
-          type="text"
-          name="city"
-          value={city}
-          required
-          onChange={handleCity}
-        ></input>
+          <label htmlFor="">City</label>
+          <input
+            type="text"
+            name="city"
+            value={city}
+            required
+            onChange={handleCity}
+          ></input>
 
-        <label htmlFor="">Date of birth</label>
-        <input type="date" name="dob" value={dob} onChange={handleDob}></input>
+          <label htmlFor="">Date of birth</label>
+          <input
+            type="date"
+            name="dob"
+            value={dob}
+            onChange={handleDob}
+          ></input>
 
-        <label htmlFor="">Level</label>
-        <select name="level" value={level} onChange={handleLevel}>
-          <option value="">Select Level</option>
-          {levelOptions.map(option => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="">Equipment</label>
-        <input
-          type="checkbox"
-          name="equipment"
-          value={equipment}
-          onChange={handleEquipment}
-        ></input>
+          <label htmlFor="">Level</label>
+          <select name="level" value={level} onChange={handleLevel}>
+            <option value="">Select Level</option>
+            {levelOptions.map(option => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="">Equipment</label>
+          <input
+            type="checkbox"
+            name="equipment"
+            value={equipment}
+            onChange={handleEquipment}
+          ></input>
 
-        <button type="submit">Create Profile</button>
-      </form>
-    </div>
+          <button type="submit">Create Profile</button>
+        </form>
+      </div>
+    )
   );
 };
 

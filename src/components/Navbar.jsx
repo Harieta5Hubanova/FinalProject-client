@@ -112,7 +112,20 @@ const Navbar = () => {
 
 export default Navbar; */
 import { useContext } from 'react';
-import { Box, Button, Flex, Avatar } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  PopoverTrigger,
+  Popover,
+  IconButton
+} from '@chakra-ui/react';
+import { BsFillHeartFill } from 'react-icons/bs';
 import { Text } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/auth.context';
@@ -151,8 +164,8 @@ const Navbar = () => {
         <NavItem to="/events" fontSize="lg">
           Events
         </NavItem>
-        <NavItem to="/gallery" fontSize="lg">
-          Gallery
+        <NavItem to="/grade-table" fontSize="lg">
+          Grade Table
         </NavItem>
         <NavItem to="/contact" fontSize="lg">
           Contact
@@ -194,7 +207,63 @@ const Navbar = () => {
                 <Text fontSize="lg" mr={2}>
                   {user.name}
                 </Text>
-                <Avatar size="sm" src={user.imageUrl} />
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={'full'}
+                    variant={'link'}
+                    cursor={'pointer'}
+                    minW={0}
+                  >
+                    <Avatar size="sm" src={user.imageUrl} />
+                  </MenuButton>
+                  <MenuList alignItems={'center'}>
+                    <MenuItem>
+                      <NavItem
+                        color={'black'}
+                        to={`/climbers/edit/${user._id}`}
+                      >
+                        <Text color={'black'}>Edit Profile</Text>
+                      </NavItem>
+                    </MenuItem>
+                    <br />
+
+                    <MenuItem>
+                      <Avatar size={'2xl'} src={user.imageUrl} />
+
+                      <br />
+                    </MenuItem>
+                  </MenuList>
+                  <Popover>
+                    <PopoverTrigger>
+                      <NavItem to="/favourites">
+                        <IconButton
+                          icon={<BsFillHeartFill />}
+                          variant="ghost"
+                          colorScheme="grey"
+                          aria-label="Favorite Crags"
+                          fontSize="xl"
+                        />
+                      </NavItem>
+                    </PopoverTrigger>
+                    {/* <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader color="black">
+                        Favorite Crags
+                      </PopoverHeader>
+                      <PopoverBody>
+                        {/*  <List spacing={2}>
+                          {user.favorites.map(crag => (
+                            <ListItem key={crag.id}>{crag.name}</ListItem>
+                          ))}
+                        </List> */}
+                    {/*   </PopoverBody>
+                    </PopoverContent> */}{' '}
+                    {/*  */}
+                    {/*  */}
+                  </Popover>
+                </Menu>
               </Flex>
             </li>
             <li>

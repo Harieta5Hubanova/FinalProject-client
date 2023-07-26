@@ -23,3 +23,16 @@ export const upload = uploadData => {
 export const fillProfileData = updatedProfile => {
   return axios.put(`${baseURL}/profile`, updatedProfile);
 };
+
+export const updateProfile = updatedProfile => {
+  return axios.put(`${baseURL}/climbers/${updatedProfile._id}`, updatedProfile);
+};
+
+export const fetchClimbers = async () => {
+  try {
+    const response = await axios.get(`${baseURL}/climbers`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching crags: ' + error.message);
+  }
+};

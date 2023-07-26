@@ -262,7 +262,7 @@ const CragCard = ({ crag }) => {
 export default CragCard;
  */
 
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import {
   Box,
   Heading,
@@ -276,10 +276,11 @@ import {
 import { BsArrowUpRight, BsHeartFill, BsHeart } from 'react-icons/bs';
 import { AuthContext } from '../context/auth.context';
 import { useNavigate } from 'react-router-dom';
+import { favouriteCrag } from '../api/crags.api';
 
 const CragCard = ({ crag }) => {
-  const [liked, setLiked] = useState(crag.likedByCurrentUser || false);
-  const [likesCount, setLikesCount] = useState(crag.likeCount || 0);
+  /* const [liked, setLiked] = useState(crag.likedByCurrentUser || false); */
+  /* const [likesCount, setLikesCount] = useState(crag.likeCount || 0); */
   const { isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -287,7 +288,11 @@ const CragCard = ({ crag }) => {
     navigate(`/crags/${crag._id}`);
   };
 
-  const handleLikeToggle = async () => {
+  const handleFavourite = () => {
+    favouriteCrag(crag._id);
+  };
+
+  /* const handleLikeToggle = async () => {
     // If the user is not logged in, do nothing
     if (!isLoggedIn) {
       return;
@@ -306,7 +311,7 @@ const CragCard = ({ crag }) => {
       console.error('An error occurred while handling like/unlike:', error);
       // You can show a general error notification to the user here, using a toast or alert component
     }
-  };
+  }; */
 
   return (
     <Center py={6}>
@@ -341,7 +346,7 @@ const CragCard = ({ crag }) => {
           <Text color={'gray.500'} noOfLines={2}>
             {crag.coordinates && crag.coordinates.latitude}{' '}
             {crag.coordinates && crag.coordinates.longitude}{' '}
-            <span>Grade: {crag.grade}</span>
+            <span>Grade: {crag.grade} </span>
           </Text>
         </Box>
         <HStack borderTop={'1px'} color="black">
@@ -366,15 +371,15 @@ const CragCard = ({ crag }) => {
             roundedBottom={'sm'}
             borderLeft={'1px'}
             cursor={isLoggedIn ? 'pointer' : 'default'} // Set cursor to default if user is not logged in
-            onClick={isLoggedIn ? handleLikeToggle : undefined} // Attach the click handler only when logged in
+            onClick={handleFavourite} // Attach the click handler only when logged in
           >
-            {liked ? (
+            {crag.likeCount > 0 ? (
               <BsHeartFill fill="red" fontSize={'24px'} />
             ) : (
               <BsHeart fontSize={'24px'} />
             )}
             <Text ml={2} fontSize="sm">
-              {likesCount} {likesCount === 1 ? 'Like' : 'Likes'}
+              {crag.likeCount} {crag.likeCount === 1 ? 'Like' : 'Likes'}
             </Text>
           </Flex>
         </HStack>

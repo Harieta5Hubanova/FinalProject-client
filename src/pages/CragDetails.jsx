@@ -1,6 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { deleteCrag, getCrag } from '../api/crags.api';
+import {
+  deleteCrag,
+  getCrag,
+  publishCrag,
+  addCommentToCrag
+} from '../api/crags.api';
 
 import {
   Container,
@@ -16,10 +21,13 @@ import {
 } from '@chakra-ui/react';
 import { IoFlag, IoCompass } from 'react-icons/io5';
 import { GiMountainClimbing } from 'react-icons/gi';
+import { AuthContext } from '../context/auth.context';
 
 const CragDetails = () => {
   /* const [crag, setCrag] = useState(null); */
   const [crag, setCrag] = useState(null);
+  const [newComment, setNewComment] = useState('');
+  const { isLoggedIn, isAdmin, user } = useContext(AuthContext);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,6 +35,10 @@ const CragDetails = () => {
     try {
       const response = await getCrag(id);
       console.log('Response:', response.data);
+
+      if (!response.data.published && !isAdmin) {
+        navigate('/crags');
+      }
       setCrag(response.data);
     } catch (error) {
       console.log('Error fetching the route', error);
@@ -34,34 +46,25 @@ const CragDetails = () => {
     }
   };
   const gradeLevels = {
-    BEGINNER: ['1', '2', '3', '4', '5', '5a', '5b', '5c', '6a'],
-    INTERMEDIATE: ['6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+'],
-    ADVANCED: ['7b', '7b+', '7c', '7c+', '8a', '8a+', '8b'],
-    PRO: ['8b+', '8c', '8c+', '9a', '9a+', '9b', '9b+']
+    BEGINNER: ['1', '2', '3', '4', '5', '5a', '5b', '5c'],
+    INTERMEDIATE: ['6a', '6a+', '6b', '6b+', '6c', '6c+', '7a'],
+    ADVANCED: ['7a+', '7b', '7b+', '7c'],
+    PRO: ['7c+', '8a', '8a+', '8b'],
+    ELITE: ['8b+', '8c', '8c+', '9a', '9a+', '9b', '9b+']
   };
-
-  // const gradeLevels = {
-  //   BEGINNER: {
-  //     label: 'Beginner',
-  //     grades: ['1', '2', '3', '4', '5a', '5b', '5c', '6a']
-  //   },
-  //   INTERMEDIATE: {
-  //     label: 'Intermediate',
-  //     grades: ['6a+', '6b', '6b+', '6c', '6c+', '7a', '7a+']
-  //   },
-  //   ADVANCED: {
-  //     label: 'Advanced',
-  //     grades: ['7b', '7b+', '7c', '7c+', '8a', '8a+', '8b']
-  //   },
-  //   PRO: {
-  //     label: 'Pro',
-  //     grades: ['8b+', '8c', '8c+', '9a', '9a+', '9b', '9b+']
-  //   }
-  // };
 
   useEffect(() => {
     fetchCrag(id);
   }, [id]);
+
+  const handleAddComment = async newComment => {
+    try {
+      await addCommentToCrag(id, newComment, user._id);
+      fetchCrag(id); // Fetch updated crag details after adding the comment
+    } catch (error) {
+      console.log('Error adding comment:', error);
+    }
+  };
 
   const handleDelete = async () => {
     try {
@@ -69,6 +72,14 @@ const CragDetails = () => {
       navigate('/crags');
     } catch (error) {
       console.log('Error deleting the route', error);
+    }
+  };
+  const handlePublish = async () => {
+    try {
+      await publishCrag(crag._id); // Make an API call to publish the crag
+      setCrag(prevCrag => ({ ...prevCrag, published: true })); // Update the local state to reflect the published status
+    } catch (error) {
+      console.error('Error publishing the crag:', error);
     }
   };
 
@@ -99,37 +110,6 @@ const CragDetails = () => {
       </Stack>
     );
   };
-
-  //   return (
-  //     <div className="CragDetails">
-  //       {crag && (
-  //         <div>
-  //           <h1>{crag.name}</h1>
-  //           <img src={crag.imageUrl} width="200px" height="200px" />
-  //           <p>{crag.description}</p>
-  //           <span>{crag.grade}</span>
-
-  //           <Link to={`/crags/edit/${id}`}>
-  //             <button>Edit Route</button>
-  //           </Link>
-  //           <button onClick={handleDelete}>Delete Route</button>
-  //         </div>
-  //       )}
-
-  //       {/*  { <Area refreshCrag={fetchCrag} projectId={id} />
-  //         {crag &&
-  //
-  //               <li className="Area card" key={area._id}>
-  //                 <h3>{crag.area.name}</h3>
-  //                 <h4>Description</h4>
-  //                 <p>{area.description}</p>
-  //               </li>
-  //
-  //           })} }
-  //  */}
-  //       <Link to={'/crags'}>Back to climbing spots</Link>
-  //     </div>
-  //   );
 
   return crag ? (
     <Container maxW={'5xl'} py={12}>
@@ -188,25 +168,90 @@ const CragDetails = () => {
           />
         </Flex>
 
-        <Link to={`/crags/edit/${id}`}>
-          <Button bg="rgb(140, 140, 225)" _hover={{ bg: 'rgb(120, 120, 205)' }}>
-            Edit Route
-          </Button>
-        </Link>
+        {isLoggedIn && (
+          <Stack spacing={4} mt={8}>
+            <Heading size="md">Leave a Comment</Heading>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                handleAddComment(newComment);
+                setNewComment(''); // Clear the input after submitting the comment
+              }}
+            >
+              <textarea
+                name="comment"
+                color="black"
+                rows={4}
+                cols={50}
+                required
+                value={newComment}
+                onChange={e => setNewComment(e.target.value)}
+              />
+              <Button
+                type="submit"
+                mt={2}
+                bg="blue.500"
+                color="white"
+                _hover={{ bg: 'blue.600' }}
+              >
+                Add Comment
+              </Button>
+            </form>
+          </Stack>
+        )}
+        {isAdmin && (
+          <Link to={`/crags/edit/${id}`}>
+            <Button
+              bg="rgb(140, 140, 225)"
+              _hover={{ bg: 'rgb(120, 120, 205)' }}
+            >
+              Edit Route
+            </Button>
+          </Link>
+        )}
 
-        <Button
-          bg="rgb(140, 140, 225)"
-          _hover={{ bg: 'rgb(120, 120, 205)' }}
-          onClick={handleDelete}
-        >
-          Delete Route
-        </Button>
+        {isAdmin && !crag.published ? (
+          <Button
+            bg="rgb(140, 140, 225)"
+            _hover={{ bg: 'rgb(120, 120, 205)' }}
+            onClick={() => {
+              handlePublish();
+              navigate('/unpublished-crags');
+            }}
+          >
+            Publish
+          </Button>
+        ) : (
+          <></>
+        )}
+
+        {isAdmin && (
+          <Button
+            bg="rgb(140, 140, 225)"
+            _hover={{ bg: 'rgb(120, 120, 205)' }}
+            onClick={handleDelete}
+          >
+            Delete Route
+          </Button>
+        )}
         <Link to={'/crags'}>
           <Button bg="rgb(140, 140, 225)" _hover={{ bg: 'rgb(120, 120, 205)' }}>
             Back to climbing spots
           </Button>
         </Link>
       </SimpleGrid>
+      <br />
+      <h1>Comments :</h1>
+      <div>
+        {crag.comment.length &&
+          crag.comment.map(cragsComments => {
+            return (
+              <p key={cragsComments._id}>
+                {cragsComments.comment} by:{cragsComments.author}
+              </p>
+            );
+          })}
+      </div>
     </Container>
   ) : (
     <>Loading...</>

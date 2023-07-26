@@ -40,7 +40,7 @@ const Login = () => {
           storeToken(response.data.authToken);
           // verify the token by sending a request to the server
           authenticateUser();
-          navigate('/crags');
+          navigate('/');
         })
         .catch(() => {
           toast(`Error logging in`, {

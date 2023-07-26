@@ -41,10 +41,60 @@ export const fetchCrags = async () => {
     throw new Error('Error fetching crags: ' + error.message);
   }
 };
+
+export const addCommentToCrag = async (id, commentText, author) => {
+  try {
+    const response = await axios.post(`${baseURL}/crags/${id}/comments`, {
+      comment: commentText,
+      author: author
+    });
+    return response.data; // Return the newly added comment data
+  } catch (error) {
+    throw new Error('Failed to add comment.');
+  }
+};
 export const getClimbers = () => {
   return axios.get(`${baseURL}/climbers`);
 };
 
 export const getArea = () => {
   return axios.get(`${baseURL}/area`);
+};
+
+export const fetchUnpublishedCrags = async () => {
+  try {
+    const response = await axios.get(`${baseURL}/unpublished-crags`); // Adjust the API endpoint
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching crags: ' + error.message);
+  }
+};
+
+export const publishCrag = async cragId => {
+  try {
+    const response = await axios.put(`${baseURL}/unpublished-crags/${cragId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error publishing the crag: ' + error.message);
+  }
+};
+
+export const favouriteCrag = async cragId => {
+  try {
+    console.log(cragId);
+    const response = await axios.put(`${baseURL}/crags/favourites/${cragId}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Error fetching the favourites', error);
+    throw new Error('Error fetching the  favourite crag: ' + error.message);
+  }
+};
+export const fetchClimberById = async id => {
+  try {
+    const response = await axios.get(`${baseURL}/climbers/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Error fetching crags: ' + error.message);
+  }
 };

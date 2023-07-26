@@ -189,7 +189,8 @@
   text-decoration: underline;
 }
 
-.CreateProfile {
+.CreateProfile,
+.EditProfile {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -197,13 +198,15 @@
   border-radius: 5px;
 }
 
-.CreateProfile h2 {
+.CreateProfile h2,
+.EditProfile h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
 }
 
-.CreateProfile label {
+.CreateProfile label,
+.EditProfile label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
@@ -211,7 +214,10 @@
 
 .CreateProfile input[type='text'],
 .CreateProfile input[type='date'],
-.CreateProfile input[type='file'] {
+.CreateProfile input[type='file'],
+.EditProfile input[type='text'],
+.EditProfile input[type='date'],
+.EditProfile input[type='file'] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -220,11 +226,13 @@
   font-size: 16px;
 }
 
-.CreateProfile input[type='checkbox'] {
+.CreateProfile input[type='checkbox'],
+.EditProfile input[type='checkbox'] {
   margin-bottom: 20px;
 }
 
-.CreateProfile button[type='submit'] {
+.CreateProfile button[type='submit'],
+.EditProfile button[type='submit'] {
   width: 100%;
   padding: 10px;
   background-color: #333;
@@ -235,11 +243,13 @@
   cursor: pointer;
 }
 
-.CreateProfile button[type='submit']:hover {
+.CreateProfile button[type='submit'],
+.EditProfile button[type='submit']:hover {
   background-color: #555;
 }
 
-.CreateProfile select {
+.CreateProfile select,
+.EditProfile select {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -250,15 +260,18 @@
 }
 
 /* Style for the dropdown arrow */
-.CreateProfile select::-ms-expand {
+.CreateProfile select,
+.EditProfile select::-ms-expand {
   display: none;
 }
 
-.CreateProfile select:hover {
+.CreateProfile select,
+.EditProfile select:hover {
   border-color: #666;
 }
 
-.CreateProfile select:focus {
+.CreateProfile select,
+.EditProfile select:focus {
   outline: none;
   border-color: #333;
 }
@@ -361,4 +374,60 @@
 
 .EditCragPage button[type='submit']:hover {
   background-color: #555;
+}
+
+/* GradeTable */
+
+.gradetable {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.grade-table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+}
+.level-heading {
+  text-align: center;
+  background-color: #f0f0f0;
+}
+.logo-level-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .logo {
+  width: 60px; /* Set the desired width for your logo 
+  height: auto;
+  margin-right: 10px;
+}  */
+
+.logo {
+  width: 70px; /* Adjust the width as needed */
+  height: 70px; /* Adjust the height as needed */
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.grade-table th,
+.grade-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.grade-table th {
+  background-color: #f2f2f2;
+  text-align: left;
 }

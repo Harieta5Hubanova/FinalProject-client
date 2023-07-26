@@ -12,6 +12,13 @@ import AddRoute from './pages/AddRoute';
 import CragDetails from './pages/CragDetails';
 import EditCrag from './pages/EditGrag';
 import IsAnon from './components/isAnon';
+import UnpublishedCrags from './pages/UnpublishedCrags';
+import IsAdmin from './components/isAdmin';
+import Contact from './pages/Contact';
+import GradeTable from './pages/GradeTable';
+import EditProfile from './pages/EditProfile';
+import IsPrivate from './components/IsPrivate';
+import Favourites from './pages/Favourites';
 
 const App = () => {
   return (
@@ -23,6 +30,14 @@ const App = () => {
         <Route path="/" element={<Home />} />
 
         <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/unpublished-crags"
+          element={
+            <IsAdmin>
+              <UnpublishedCrags />
+            </IsAdmin>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -37,6 +52,17 @@ const App = () => {
         <Route path="/climbers" element={<Climbers />} />
         <Route path="/crags/:id" element={<CragDetails />} />
         <Route path="/crags/edit/:id" element={<EditCrag />} />
+        <Route
+          path="/climbers/edit/:id"
+          element={
+            <IsPrivate>
+              <EditProfile />
+            </IsPrivate>
+          }
+        />
+        <Route path="/favourites" element={<Favourites />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/grade-table" element={<GradeTable />} />
       </Routes>
     </>
   );
