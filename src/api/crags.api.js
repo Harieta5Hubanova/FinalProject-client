@@ -98,3 +98,14 @@ export const fetchClimberById = async id => {
     throw new Error('Error fetching crags: ' + error.message);
   }
 };
+
+export const fetchFavourites = async id => {
+  try {
+    const response = await axios.get(`${baseURL}/climbers/${id}`);
+    console.log(response.data);
+    return response.data.favourites;
+  } catch (error) {
+    console.log('Error fetching the favourites', error);
+    throw new Error('Error fetching the  favourite crag: ' + error.message);
+  }
+};

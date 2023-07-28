@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { verify } from '../api/auth.api';
 
 const AuthContext = createContext();
@@ -8,6 +9,8 @@ const AuthProviderWrapper = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const navigate = useNavigate();
 
   const storeToken = token => {
     localStorage.setItem('authToken', token);
@@ -48,7 +51,7 @@ const AuthProviderWrapper = ({ children }) => {
   const logOutUser = () => {
     //to log out user, remove token
     removeToken();
-
+    navigate('/');
     //update state variable
     authenticateUser();
   };

@@ -168,10 +168,28 @@ import {
   Stack,
   Button,
   Badge,
-  useColorModeValue
+  useColorModeValue,
+  Input
 } from '@chakra-ui/react';
+import { sendMessage } from '../api/index.api';
+import { useState } from 'react';
 
 const UserCard = ({ climber }) => {
+  const [message, setMessage] = useState('');
+
+  const handleSendMessage = async () => {
+    try {
+      const fromEmail = 'belayme.web@gmail.com';
+      const toEmail = climber.email;
+      const subject = `Message from ${fromEmail}`;
+      await sendMessage({ fromEmail, toEmail, subject, message });
+      setMessage('');
+
+      console.log('Message sent successfully!');
+    } catch (error) {
+      console.log('Error sending message:', error.message);
+    }
+  };
   console.log(climber);
   return (
     <Center py={6}>
@@ -233,10 +251,21 @@ const UserCard = ({ climber }) => {
         </Stack>
 
         <Stack mt={8} direction={'row'} spacing={4}>
+          <Input
+            flex={1}
+            fontSize={'sm'}
+            rounded={'full'}
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+            _focus={{
+              bg: 'gray.200'
+            }}
+          />
           <Button
             flex={1}
             fontSize={'sm'}
             rounded={'full'}
+            onClick={handleSendMessage}
             _focus={{
               bg: 'gray.200'
             }}

@@ -46,7 +46,9 @@ const App = () => {
             </IsAnon>
           }
         />
+
         <Route path="/profile" element={<ProfilePage />} />
+
         <Route path="/crags" element={<Crags />} />
         <Route path="/add-crag" element={<AddRoute />} />
         <Route path="/climbers" element={<Climbers />} />

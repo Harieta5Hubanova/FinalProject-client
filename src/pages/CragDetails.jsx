@@ -22,9 +22,10 @@ import {
 import { IoFlag, IoCompass } from 'react-icons/io5';
 import { GiMountainClimbing } from 'react-icons/gi';
 import { AuthContext } from '../context/auth.context';
+import CommentsCard from './CommentsCard';
+import GridBlurredBackdrop from './GridBlurredBackdrop';
 
 const CragDetails = () => {
-  /* const [crag, setCrag] = useState(null); */
   const [crag, setCrag] = useState(null);
   const [newComment, setNewComment] = useState('');
   const { isLoggedIn, isAdmin, user } = useContext(AuthContext);
@@ -241,17 +242,36 @@ const CragDetails = () => {
         </Link>
       </SimpleGrid>
       <br />
-      <h1>Comments :</h1>
+      <GridBlurredBackdrop />
+
+      <div>
+        {crag.comment.length > 0 ? (
+          crag.comment.map(cragsComments => (
+            <CommentsCard
+              key={cragsComments._id}
+              name={`${cragsComments.author.name} ${cragsComments.author.surname}`}
+              country={cragsComments.author.country}
+              content={cragsComments.comment}
+              avatar={cragsComments.author.imageUrl}
+            />
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
+      </div>
+
+      {/* <h1>Comments :</h1>
       <div>
         {crag.comment.length &&
           crag.comment.map(cragsComments => {
             return (
               <p key={cragsComments._id}>
-                {cragsComments.comment} by:{cragsComments.author}
+                {cragsComments.comment} by:{cragsComments.author.name}
+                {cragsComments.author.surname}
               </p>
             );
           })}
-      </div>
+      </div> */}
     </Container>
   ) : (
     <>Loading...</>
