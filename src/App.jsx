@@ -17,7 +17,6 @@ import IsAdmin from './components/isAdmin';
 import Contact from './pages/Contact';
 import GradeTable from './pages/GradeTable';
 import EditProfile from './pages/EditProfile';
-import IsPrivate from './components/IsPrivate';
 
 import Favourites from './pages/Favourites';
 
@@ -55,14 +54,7 @@ const App = () => {
         <Route path="/climbers" element={<Climbers />} />
         <Route path="/crags/:id" element={<CragDetails />} />
         <Route path="/crags/edit/:id" element={<EditCrag />} />
-        <Route
-          path="/climbers/edit/:id"
-          element={
-            <IsPrivate>
-              <EditProfile />
-            </IsPrivate>
-          }
-        />
+        <Route path="/climbers/edit/:id" element={<EditProfile />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/grade-table" element={<GradeTable />} />
