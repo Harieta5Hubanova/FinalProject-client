@@ -25,8 +25,8 @@ const Signup = () => {
     try {
       const user = { email, password };
       const res = await signup(user);
-      storeToken(res.data.authToken);
-      authenticateUser();
+      await storeToken(res.data.authToken);
+      await authenticateUser();
       navigate('/profile');
     } catch (error) {
       console.log('Error sign up', error);
