@@ -30,7 +30,7 @@ export const updateProfile = updatedProfile => {
 
 export const fetchClimbers = async () => {
   try {
-    const response = await axios.get(`${baseURL}/climbers`);
+    const response = await axios.get(`${baseURL}/climbers/`);
     return response.data;
   } catch (error) {
     throw new Error('Error fetching crags: ' + error.message);
