@@ -17,8 +17,9 @@ import IsAdmin from './components/isAdmin';
 import Contact from './pages/Contact';
 import GradeTable from './pages/GradeTable';
 import EditProfile from './pages/EditProfile';
-import IsPrivate from './components/IsPrivate';
+
 import Favourites from './pages/Favourites';
+import IsPrivate from './components/IsPrivate';
 
 const App = () => {
   return (
