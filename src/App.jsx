@@ -55,14 +55,7 @@ const App = () => {
         <Route path="/climbers" element={<Climbers />} />
         <Route path="/crags/:id" element={<CragDetails />} />
         <Route path="/crags/edit/:id" element={<EditCrag />} />
-        <Route
-          path="/climbers/edit/:id"
-          element={
-            <IsPrivate>
-              <EditProfile />
-            </IsPrivate>
-          }
-        />
+        <Route path="/climbers/edit/:id" element={<EditProfile />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/grade-table" element={<GradeTable />} />
